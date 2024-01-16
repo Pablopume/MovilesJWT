@@ -12,13 +12,13 @@ import retrofit2.http.Path
 
 interface OrderService {
     @GET("order")
-    suspend fun getOrders(@Header("Authorization") accessToken: String?): Response<List<OrderResponse>>
+    suspend fun getOrders(): Response<List<OrderResponse>>
 
     @DELETE("order/{id}")
-    suspend fun deleteOrder(@Header("Authorization") accessToken: String?, @Path("id") id: Int): Response<ResponseBody>
+    suspend fun deleteOrder(@Path("id") id: Int): Response<ResponseBody>
 
     @POST("order")
-    suspend fun createOrder(@Header("Authorization") accessToken: String?, @Body order: OrderResponse): Response<OrderResponse>
+    suspend fun createOrder(@Body order: OrderResponse): Response<OrderResponse>
 
 
 }

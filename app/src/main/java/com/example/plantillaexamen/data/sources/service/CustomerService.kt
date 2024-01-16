@@ -13,13 +13,13 @@ import retrofit2.http.Path
 interface CustomerService {
 
     @GET("customer")
-    suspend fun getCustomers(@Header("Authorization") accessToken: String?): Response<List<CustomerResponse>>
+    suspend fun getCustomers(): Response<List<CustomerResponse>>
 
     @DELETE("customer/{id}")
-    suspend fun deleteCustomer(@Header("Authorization") accessToken: String?, @Path("id") id: Int): Response<ResponseBody>
+    suspend fun deleteCustomer(@Path("id") id: Int): Response<ResponseBody>
 
     @GET("customer/{id}")
-    suspend fun getCustomer(@Header("Authorization") accessToken: String?, @Path("id") id: Int): Response<CustomerResponse>
+    suspend fun getCustomer( @Path("id") id: Int): Response<CustomerResponse>
 
 
 }

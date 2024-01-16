@@ -2,6 +2,7 @@ package com.example.plantillaexamen.data.sources.remote
 
 import com.example.plantillaexamen.data.TokenManager
 import com.example.plantillaexamen.data.sources.service.AuthService
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import okhttp3.Authenticator
 import okhttp3.OkHttpClient
@@ -13,17 +14,18 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Inject
 
-class TokenAuthenticator @Inject constructor () : Authenticator {
+class TokenAuthenticator @Inject constructor(private val tokenManager: TokenManager) :
+    Authenticator {
     override fun authenticate(route: Route?, response: Response): Request? {
-        if (response.code == 401) {
-            val newToken = runBlocking {
-                getNewToken(TokenManager.getRefreshToken())
-            }
-            return response.request.newBuilder()
-                .header("Authorization", "$newToken")
-                .build()
+        val token = runBlocking { tokenManager.getToken().first()
         }
-        return null
+        return runBlocking {
+            val newToken= getNewToken(token)
+            val newAccessToken = newToken.headers()["Authorization"]
+            newAccessToken?.let { tokenManager.saveAccessToken(it) }
+        response.request.newBuilder().header("Authorization", "$token").build()
+        }
+
     }
 
     private suspend fun getNewToken(refreshToken: String?): retrofit2.Response<Unit> {

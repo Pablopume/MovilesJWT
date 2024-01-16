@@ -3,6 +3,7 @@ package com.example.plantillaexamen.data.sources.di
 import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.preferencesDataStore
+import androidx.datastore.preferences.core.Preferences
 import com.example.plantillaexamen.data.sources.remote.RemoteDataSource
 import com.example.plantillaexamen.data.sources.remote.TokenAuthenticator
 import com.example.plantillaexamen.data.sources.remote.ServiceInterceptor
@@ -13,29 +14,22 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import okhttp3.Authenticator
-import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
 import java.util.concurrent.TimeUnit
-import java.util.prefs.Preferences
+
 import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
-    @Singleton
-    @Provides
-    fun provideInterceptor(): Interceptor {
-        return ServiceInterceptor()
-    }
 
 
     @Singleton
     @Provides
-    fun provideHttpClient(interceptor: Interceptor, authenticator: Authenticator): OkHttpClient {
+    fun provideHttpClient(interceptor: ServiceInterceptor, authenticator: TokenAuthenticator): OkHttpClient {
         return OkHttpClient
             .Builder()
             .readTimeout(15, TimeUnit.SECONDS)
@@ -52,11 +46,6 @@ object NetworkModule {
         return retrofit.create(AuthService::class.java)
     }
 
-    @Singleton
-    @Provides
-    fun provideAuthenticator(): Authenticator {
-        return TokenAuthenticator()
-    }
 
 
     @Singleton

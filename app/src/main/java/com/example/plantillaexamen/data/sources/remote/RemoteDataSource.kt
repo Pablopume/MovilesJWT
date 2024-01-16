@@ -20,7 +20,7 @@ class RemoteDataSource @Inject constructor(
 
     suspend fun getCustomers(): NetworkResult<List<Customer>> {
         try {
-            val response = customerService.getCustomers( TokenManager.getAuthorizationToken())
+            val response = customerService.getCustomers()
             if (response.isSuccessful) {
                 val body = response.body()
                 body?.let {
@@ -39,7 +39,7 @@ class RemoteDataSource @Inject constructor(
 
     suspend fun deleteCustomer(id: Int): NetworkResult<Unit> {
         return try {
-            val response = customerService.deleteCustomer(TokenManager.getAuthorizationToken() ,id)
+            val response = customerService.deleteCustomer(id)
             if (response.isSuccessful) {
                 NetworkResult.Success(Unit)
             } else {
@@ -54,7 +54,7 @@ class RemoteDataSource @Inject constructor(
 
     suspend fun getCustomer(id: Int): NetworkResult<Customer> {
         try {
-            val response = customerService.getCustomer(TokenManager.getAuthorizationToken() ,id)
+            val response = customerService.getCustomer(id)
             if (response.isSuccessful) {
                 val body = response.body()
                 body?.let {
@@ -89,7 +89,7 @@ class RemoteDataSource @Inject constructor(
 
     suspend fun getOrders(): NetworkResult<List<Order>> {
         try {
-            val response = orderService.getOrders(TokenManager.getAuthorizationToken() )
+            val response = orderService.getOrders()
             if (response.isSuccessful) {
                 val body = response.body()
                 body?.let {
@@ -106,7 +106,7 @@ class RemoteDataSource @Inject constructor(
 
     suspend fun deleteOrder(id: Int): NetworkResult<Unit> {
         return try {
-            val response = orderService.deleteOrder(TokenManager.getAuthorizationToken() ,id)
+            val response = orderService.deleteOrder(id)
             if (response.isSuccessful) {
                 NetworkResult.Success(Unit)
             } else {
@@ -119,7 +119,7 @@ class RemoteDataSource @Inject constructor(
 
     suspend fun createOrder(order: Order): NetworkResult<Order> {
         try {
-            val response = orderService.createOrder(TokenManager.getAuthorizationToken() ,order.toOrderResponse())
+            val response = orderService.createOrder(order.toOrderResponse())
             if (response.isSuccessful) {
                 val body = response.body()
                 body?.let {
