@@ -3,6 +3,7 @@ package com.example.plantillaexamen.data.sources.remote
 import com.example.plantillaexamen.data.TokenManager
 import com.example.plantillaexamen.data.model.toCustomer
 import com.example.plantillaexamen.data.model.toOrder
+import com.example.plantillaexamen.data.sources.service.AuthService
 import com.example.plantillaexamen.data.sources.service.CustomerService
 import com.example.plantillaexamen.data.sources.service.OrderService
 import com.example.plantillaexamen.domain.modelo.Customer
@@ -13,7 +14,8 @@ import javax.inject.Inject
 
 class RemoteDataSource @Inject constructor(
     private val orderService: OrderService,
-    private val customerService: CustomerService
+    private val customerService: CustomerService,
+    private val authService: AuthService
 ) {
 
     suspend fun getCustomers(): NetworkResult<List<Customer>> {
@@ -33,6 +35,8 @@ class RemoteDataSource @Inject constructor(
         return NetworkResult.Error(ERROR)
     }
 
+
+
     suspend fun deleteCustomer(id: Int): NetworkResult<Unit> {
         return try {
             val response = customerService.deleteCustomer(TokenManager.getAuthorizationToken() ,id)
@@ -46,6 +50,8 @@ class RemoteDataSource @Inject constructor(
         }
     }
 
+
+
     suspend fun getCustomer(id: Int): NetworkResult<Customer> {
         try {
             val response = customerService.getCustomer(TokenManager.getAuthorizationToken() ,id)
@@ -53,6 +59,24 @@ class RemoteDataSource @Inject constructor(
                 val body = response.body()
                 body?.let {
                     return NetworkResult.Success(it.toCustomer())
+                }
+            } else {
+                return NetworkResult.Error("${response.code()} ${response.message()}")
+            }
+        } catch (e: Exception) {
+            return NetworkResult.Error(e.message ?: e.toString())
+        }
+        return NetworkResult.Error(ERROR)
+    }
+
+    suspend fun refreshToken(refreshToken: String?): NetworkResult<String> {
+        try {
+            val response = authService.refreshToken(refreshToken)
+
+            if (response.isSuccessful) {
+                val body = response.body()
+                body?.let {
+                    return NetworkResult.Success("Done") // Asegúrate de ajustar el tipo según la respuesta de tu API
                 }
             } else {
                 return NetworkResult.Error("${response.code()} ${response.message()}")

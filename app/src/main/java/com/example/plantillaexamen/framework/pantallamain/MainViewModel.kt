@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.plantillaexamen.domain.modelo.Customer
+import com.example.plantillaexamen.domain.modelo.toCustomer
 import com.example.plantillaexamen.domain.usecases.DeleteCustomerUseCase
 import com.example.plantillaexamen.domain.usecases.GetAllCustomersUseCase
 import com.example.plantillaexamen.domain.usecases.RoomAddCustomer
@@ -13,6 +14,7 @@ import com.example.plantillaexamen.domain.usecases.RoomDeleteCustomer
 import com.example.plantillaexamen.domain.usecases.RoomGetCustomers
 import com.example.plantillaexamen.utils.NetworkResult
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -45,7 +47,7 @@ class MainViewModel @Inject constructor(
         )
 
         getPersonas()
-        addPersonasDataBase(listaPersonas)
+
         if (listaPersonas.isEmpty()) {
             getPersonasDataBase()
         }
@@ -77,22 +79,23 @@ class MainViewModel @Inject constructor(
     }
 
     private fun getPersonasDataBase() {
-        viewModelScope.launch {
+        viewModelScope.launch (Dispatchers.IO){
             roomGetCustomers.invoke().forEach { item ->
-                listaPersonas.add(item)
+
+                listaPersonas.add(item.toCustomer())
             }
             _uiState.value = _uiState.value.copy(personas = listaPersonas)
         }
     }
 
     private fun deletePersonaRoom(id: Int) {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             roomDeleteCustomer.invoke(id)
         }
     }
 
     private fun addPersonasDataBase(personas: List<Customer>) {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             roomAddCustomer.invoke(personas)
         }
     }
@@ -118,6 +121,7 @@ class MainViewModel @Inject constructor(
                     }
                 }
             }
+            addPersonasDataBase(listaPersonas)
             _uiState.value = _uiState.value.copy(personas = listaPersonas)
         }
     }
