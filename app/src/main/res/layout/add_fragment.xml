@@ -23,7 +23,7 @@
             android:id="@+id/textName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="hint" />
+            android:hint="@string/numero" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
@@ -34,7 +34,7 @@
         android:layout_marginTop="138dp"
         android:layout_marginEnd="167dp"
         android:layout_marginBottom="165dp"
-        android:text="Button"
+        android:text="@string/button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

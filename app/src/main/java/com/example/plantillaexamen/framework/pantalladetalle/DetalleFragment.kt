@@ -17,7 +17,6 @@ import com.example.plantillaexamen.databinding.FragmentDetalleBinding
 
 
 import com.example.restaurantapi.domain.modelo.Order
-import com.example.restaurantapi.framework.pantallarorders.OrderEvent
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -59,35 +58,27 @@ class DetalleFragment : Fragment() {
     }
 
 
-
     private fun getCustomer(id: Int) {
         lifecycleScope.launch {
 
             viewModel.handleEvent(OrderEvent.GetCustomer(id))
 
-        }    }
+        }
+    }
 
     private fun handleIntent(id: Int) {
         lifecycleScope.launch {
 
             viewModel.handleEvent(OrderEvent.GetOrders(id))
 
-        }    }
+        }
+    }
 
     private fun initViewModel() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.uiState.collect { state ->
                 handlePersonaState(state)
                 handleViewState(state)
-                handleCustomerActual(state)
-            }
-        }
-    }
-
-
-    private fun handleCustomerActual(state: OrdersState) {
-        state.customerActual.let {
-            if (it != null) {
 
             }
         }

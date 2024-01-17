@@ -1,22 +1,18 @@
 package com.example.plantillaexamen.framework.pantalladetalle
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.example.plantillaexamen.domain.usecases.AddOrderUseCase
 import com.example.plantillaexamen.domain.usecases.DeleteOrderUseCase
 import com.example.plantillaexamen.domain.usecases.GetAllOrdersUseCase
 import com.example.plantillaexamen.domain.usecases.GetCustomerUseCase
 import com.example.plantillaexamen.utils.NetworkResult
 import com.example.plantillaexamen.domain.modelo.Customer
+import com.example.plantillaexamen.framework.ConstantesFramework
 import com.example.restaurantapi.domain.modelo.Order
-import com.example.restaurantapi.framework.pantallarorders.OrderEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 @HiltViewModel
 class OrdersViewModel @Inject constructor(
@@ -40,7 +36,7 @@ class OrdersViewModel @Inject constructor(
         )
     }
 
-    suspend fun handleEvent(event: OrderEvent) {
+     suspend fun handleEvent(event: OrderEvent) {
         when (event) {
             is OrderEvent.GetOrders -> {
                 getOrders(event.id)
@@ -64,7 +60,7 @@ class OrdersViewModel @Inject constructor(
 
     private suspend fun getCustomer(id: Int) {
         when (val result = getCustomerUseCase.invoke(id)) {
-            is NetworkResult.Error<*> -> _error.value = result.message ?: "error"
+            is NetworkResult.Error<*> -> _error.value = result.message ?: ConstantesFramework.ERROR
             is NetworkResult.Success<*> -> {
                 _uiState.value = _uiState.value.copy(customerActual = result.data as Customer)
             }
@@ -73,7 +69,7 @@ class OrdersViewModel @Inject constructor(
 
     private suspend fun addOrder(order: Order) {
         when (val result = addOrderUseCase.invoke(order)) {
-            is NetworkResult.Error<*> -> _error.value = result.message ?: "error"
+            is NetworkResult.Error<*> -> _error.value = result.message ?: ConstantesFramework.ERROR
             is NetworkResult.Success<*> -> {
                 if (result.data is Order) {
                     getOrders(order.customerId)
@@ -98,7 +94,7 @@ class OrdersViewModel @Inject constructor(
             val result = deleteOrderUseCase.invoke(persona)
 
             if (result is NetworkResult.Error<*>) {
-                _error.value = "Error al eliminar"
+                _error.value = ConstantesFramework.ERROR
                 isSuccessful = false
             } else {
                 personasParaEliminar.add(persona)

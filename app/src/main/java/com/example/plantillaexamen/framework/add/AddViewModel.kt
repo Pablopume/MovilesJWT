@@ -1,18 +1,18 @@
 package com.example.plantillaexamen.framework.add
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.example.plantillaexamen.domain.usecases.AddOrderUseCase
+import com.example.plantillaexamen.framework.ConstantesFramework
 import com.example.plantillaexamen.utils.NetworkResult
 import com.example.restaurantapi.domain.modelo.Order
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.launch
 import javax.inject.Inject
+
+
 
 
 @HiltViewModel
@@ -21,9 +21,7 @@ class AddViewModel @Inject constructor(private val addOrderUseCase: AddOrderUseC
     private val _state = MutableStateFlow(AddState(error = null))
     val state: StateFlow<AddState> get() = _state.asStateFlow()
 
-    init {
-        // No es necesario inicializar _state en el constructor ahora
-    }
+
 
     suspend fun handleEvent(event: AddOrderEvent) {
         when (event) {
@@ -42,7 +40,7 @@ class AddViewModel @Inject constructor(private val addOrderUseCase: AddOrderUseC
             }
 
             is NetworkResult.Error -> {
-                _state.value = _state.value.copy(error = result.message ?: "error")
+                _state.value = _state.value.copy(error = result.message ?: ConstantesFramework.ERROR)
             }
         }
     }

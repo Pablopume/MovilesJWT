@@ -16,6 +16,20 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:navGraph="@navigation/navigation" />
+        app:navGraph="@navigation/navigation2" />
 
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavView"
+        android:layout_width="0dp"
+
+        android:layout_height="wrap_content"
+        app:backgroundTint="@color/design_default_color_primary"
+        app:itemIconTint="@color/design_default_color_on_primary"
+        app:itemTextColor="@color/design_default_color_on_primary"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:itemActiveIndicatorStyle="@style/App.Custom.Indicator"
+        app:menu="@menu/menu_nav"
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>

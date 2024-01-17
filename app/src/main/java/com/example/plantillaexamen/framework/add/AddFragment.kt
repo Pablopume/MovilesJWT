@@ -10,10 +10,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.plantillaexamen.databinding.AddFragmentBinding
-
-
-import com.example.plantillaexamen.databinding.FragmentMainBinding
-import com.example.plantillaexamen.framework.pantalladetalle.OrdersViewModel
 import com.example.restaurantapi.domain.modelo.Order
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch

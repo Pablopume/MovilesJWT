@@ -27,6 +27,7 @@ class CustomerAdapter(
         fun itemHasClicked(customer: Customer)
         fun onClickItem(customerId: Int)
     }
+
     private var selectedMode: Boolean = false
     private var selectedPersonas = mutableSetOf<Customer>()
 
@@ -42,12 +43,11 @@ class CustomerAdapter(
         notifyDataSetChanged()
     }
 
-    fun setSelectedItems(personasSeleccionadas: List<Customer>){
+    fun setSelectedItems(personasSeleccionadas: List<Customer>) {
         selectedPersonas.clear()
         selectedPersonas.addAll(personasSeleccionadas)
         notifyDataSetChanged()
     }
-
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewholder {
@@ -71,9 +71,9 @@ class CustomerAdapter(
 
         fun bind(item: Customer) {
 
-                itemView.setOnClickListener {
-                    actions.onClickItem(item.id)
-                }
+            itemView.setOnClickListener {
+                actions.onClickItem(item.id)
+            }
 
 
             itemView.setOnLongClickListener {

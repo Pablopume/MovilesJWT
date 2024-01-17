@@ -1,6 +1,7 @@
 package com.example.plantillaexamen.data.sources.remote
 
 import com.example.plantillaexamen.data.TokenManager
+import com.example.plantillaexamen.data.sources.Constantes
 import com.example.plantillaexamen.data.sources.service.AuthService
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
@@ -21,9 +22,9 @@ class TokenAuthenticator @Inject constructor(private val tokenManager: TokenMana
         }
         return runBlocking {
             val newToken= getNewToken(token)
-            val newAccessToken = newToken.headers()["Authorization"]
+            val newAccessToken = newToken.headers()[Constantes.AUTHORIZATION]
             newAccessToken?.let { tokenManager.saveAccessToken(it) }
-        response.request.newBuilder().header("Authorization", "$token").build()
+        response.request.newBuilder().header(Constantes.AUTHORIZATION, "$token").build()
         }
 
     }
@@ -34,7 +35,7 @@ class TokenAuthenticator @Inject constructor(private val tokenManager: TokenMana
         val okHttpClient = OkHttpClient.Builder().addInterceptor(loggingInterceptor).build()
 
         val retrofit = Retrofit.Builder()
-            .baseUrl("https://www.googleapis.com/")
+            .baseUrl(Constantes.baseurl)
             .addConverterFactory(GsonConverterFactory.create())
             .client(okHttpClient)
             .build()

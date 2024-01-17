@@ -6,4 +6,7 @@
     </style>
 
     <style name="Theme.PlantillaExamen" parent="Base.Theme.PlantillaExamen" />
+    <style name="App.Custom.Indicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
+        <item name="android:indeterminateTint">@color/teal_200</item>
+    </style>
 </resources>

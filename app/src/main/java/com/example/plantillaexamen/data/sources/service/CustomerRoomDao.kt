@@ -4,12 +4,12 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.example.plantillaexamen.domain.modelo.Customer
+import com.example.plantillaexamen.data.sources.Constantes
 import com.example.plantillaexamen.domain.modelo.CustomerEntity
 
 @Dao
 interface CustomerRoomDao {
-    @Query("SELECT * FROM customer_table")
+    @Query(Constantes.QUERY3)
     fun getAllCustomers(): List<CustomerEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -18,6 +18,6 @@ interface CustomerRoomDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertCustomer(customer: CustomerEntity)
 
-    @Query("DELETE FROM customer_table WHERE id = :id")
+    @Query(Constantes.QUERY4)
     fun deleteCustomer(id: Int)
 }

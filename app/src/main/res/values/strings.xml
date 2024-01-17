@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">PlantillaExamen</string>
+    <string name="email">Email</string>
+    <string name="conectarse">Conectarse</string>
+    <string name="contrase_a">Contraseña</string>
+    <string name="registrarse">Registrarse</string>
+    <string name="roles_y_credenciales_n_nrol_user_pabsermat_hotmail_com_123_nrol_admin_jio_hotmail_com_123">Roles y Credenciales:\n\nROL USER: pabsermat@hotmail.com 123\nROL ADMIN: jio@hotmail.com 123</string>
+    <string name="forgot_password">Forgot Password</string>
+    <string name="numero">Numero</string>
+    <string name="button">Button</string>
+    <string name="a_adir">Añadir</string>
+    <string name="add_order">Add order</string>
 </resources>

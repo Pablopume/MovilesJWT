@@ -3,7 +3,6 @@ package com.example.plantillaexamen.data
 import com.example.plantillaexamen.data.sources.remote.RemoteDataSource
 import com.example.plantillaexamen.data.sources.service.CustomerRoomDao
 import com.example.plantillaexamen.domain.modelo.Customer
-import com.example.plantillaexamen.data.sources.service.CustomerService
 import com.example.plantillaexamen.domain.modelo.CustomerEntity
 import com.example.plantillaexamen.domain.modelo.toCustomerEntity
 import com.example.plantillaexamen.utils.NetworkResult
@@ -14,7 +13,6 @@ import javax.inject.Inject
 @ActivityRetainedScoped
 class CustomerRepository @Inject constructor(
     private val remoteDataSource: RemoteDataSource,
-    private val customerService: CustomerService,
     private val customerRoomDao: CustomerRoomDao
 ) {
 

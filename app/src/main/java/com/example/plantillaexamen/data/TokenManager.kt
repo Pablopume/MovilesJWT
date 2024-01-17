@@ -3,6 +3,7 @@ package com.example.plantillaexamen.data
 import android.content.Context
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
+import com.example.plantillaexamen.data.sources.Constantes
 import com.example.plantillaexamen.data.sources.di.NetworkModule.dataStore
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
@@ -10,10 +11,12 @@ import kotlinx.coroutines.flow.map
 
 import javax.inject.Inject
 
+
+
 class TokenManager @Inject constructor(@ApplicationContext private val context: Context) {
     companion object {
-        private val refreshtoken = stringPreferencesKey("refresh_token")
-        private val accessToken = stringPreferencesKey("access_token")
+        private val refreshtoken = stringPreferencesKey(Constantes.REFRESH)
+        private val accessToken = stringPreferencesKey(Constantes.ACCESS_TOKEN)
     }
 
     fun getToken(): Flow<String?> {

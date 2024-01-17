@@ -4,10 +4,11 @@ import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.datastore.preferences.core.Preferences
-import com.example.plantillaexamen.data.sources.remote.RemoteDataSource
+import com.example.plantillaexamen.data.sources.Constantes
 import com.example.plantillaexamen.data.sources.remote.TokenAuthenticator
 import com.example.plantillaexamen.data.sources.remote.ServiceInterceptor
 import com.example.plantillaexamen.data.sources.service.AuthService
+import com.example.plantillaexamen.data.sources.service.CredentialsService
 import com.example.plantillaexamen.data.sources.service.CustomerService
 import com.example.plantillaexamen.data.sources.service.OrderService
 import dagger.Module
@@ -21,6 +22,8 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import java.util.concurrent.TimeUnit
 
 import javax.inject.Singleton
+
+
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -67,18 +70,22 @@ object NetworkModule {
         ): Retrofit {
         return Retrofit.Builder()
             // 192.168.1.155
-            .baseUrl("http://informatica.iesquevedo.es:2326/PabloSerrano/restaurant/")
+            .baseUrl(Constantes.baseurl)
             .client(okHttpClient)
             .addConverterFactory(gsonConverterFactory)
             .build()
     }
-    val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "data_store")
+    val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = Constantes.datastore)
 
     @Singleton
     @Provides
     fun provideCurrencyService(retrofit: Retrofit): CustomerService =
         retrofit.create(CustomerService::class.java)
 
+    @Singleton
+    @Provides
+    fun provideCredentialsService(retrofit: Retrofit): CredentialsService =
+        retrofit.create(CredentialsService::class.java)
     @Singleton
     @Provides
     fun provideOrderService(retrofit: Retrofit): OrderService =

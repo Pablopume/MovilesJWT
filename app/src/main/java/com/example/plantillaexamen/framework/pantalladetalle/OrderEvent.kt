@@ -1,4 +1,4 @@
-package com.example.restaurantapi.framework.pantallarorders
+package com.example.plantillaexamen.framework.pantalladetalle
 
 
 import com.example.restaurantapi.domain.modelo.Order

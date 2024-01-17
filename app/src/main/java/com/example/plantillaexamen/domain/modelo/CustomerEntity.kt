@@ -2,8 +2,10 @@ package com.example.plantillaexamen.domain.modelo
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.example.plantillaexamen.domain.ConstantesDomain
 import java.time.LocalDate
-@Entity(tableName = "customer_table")
+
+@Entity(tableName =ConstantesDomain.CUSTOMER_TABLE)
 data class CustomerEntity
 
 (
